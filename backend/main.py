@@ -38,7 +38,7 @@ app = CustomFastAPI(
     lifespan=lifespan
 )
 
-allowed_origins = ["http://localhost:5173", "https://evpoint.in"]
+allowed_origins = ["http://localhost:5173", "https://app.evpin.in", "https://evpin.in"]
 
 app.add_middleware(
     CORSMiddleware,
