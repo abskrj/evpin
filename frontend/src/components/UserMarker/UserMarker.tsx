@@ -5,7 +5,6 @@ import { Marker, useMapEvents } from 'react-leaflet';
 import UserLocationMarker from '@/assets/user-location.png';
 import EvLocationMarker from '@/assets/fuel-station.png';
 
-import { CITY_LAT_LNG } from '@/constants/location';
 import { getEVStationNearby } from '@/api/getEVStationByPoint';
 
 interface EVStation {
@@ -88,13 +87,6 @@ export default function UserMarker() {
 		<>
 			{getUserMarker()}
 			{getEvStationMarker}
-			<Marker
-				eventHandlers={{
-					click: console.log,
-				}}
-				position={CITY_LAT_LNG.EV}
-				icon={evLocationIcon}
-			/>
 		</>
 	);
 }
