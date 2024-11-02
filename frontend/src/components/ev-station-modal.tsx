@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { getEVStationById } from '@/api/getEVStationByPoint';
 import { useEffect } from 'react';
 import { openCoordinatesInMapsApp } from '@/lib/utils';
+import { Skeleton } from './ui/skeleton';
 
 interface EVStationModalProps {
 	selectedEVStation: string | undefined;
@@ -23,6 +24,8 @@ export function EvStationModal({
 	selectedEVStation,
 	onClose = () => {},
 }: EVStationModalProps) {
+	const [isLoading, setIsLoading] = useState(true);
+
 	const [evStation, setEvStation] = useState<
 		| {
 				_id: string;
@@ -41,7 +44,10 @@ export function EvStationModal({
 
 	useEffect(() => {
 		if (selectedEVStation) {
-			getEVStationById(selectedEVStation).then(setEvStation);
+			setIsLoading(true);
+			getEVStationById(selectedEVStation)
+				.then(setEvStation)
+				.finally(() => setIsLoading(false));
 		}
 	}, [selectedEVStation]);
 
@@ -54,28 +60,37 @@ export function EvStationModal({
 	return (
 		<Dialog open={!!selectedEVStation} onOpenChange={onClose}>
 			<DialogContent className="sm:max-w-[425px]">
-				<DialogHeader>
-					<DialogTitle className="pr-8">
-						{evStation?.title}
-					</DialogTitle>
-				</DialogHeader>
-				<div className="grid gap-4 py-4">
-					{evStation?.description && (
-						<DialogDescription>
-							{evStation?.description}
-						</DialogDescription>
-					)}
-					{evStation?.address && (
-						<div className="grid grid-cols-4 items-center gap-4">
-							<span className="col-span-4 font-semibold">
-								Address:
-							</span>
-							<span className="col-span-4">
-								{evStation?.address}
-							</span>
-						</div>
-					)}
-					{/* {evStation?.supportedPins && (
+				{isLoading ? (
+					<>
+						<DialogHeader>
+							<Skeleton className="h-4 w-full" />
+						</DialogHeader>
+						<Skeleton className="h-[100px] w-full" />
+					</>
+				) : (
+					<>
+						<DialogHeader>
+							<DialogTitle className="pr-8">
+								{evStation?.title}
+							</DialogTitle>
+						</DialogHeader>
+						<div className="grid gap-4 py-4">
+							{evStation?.description && (
+								<DialogDescription>
+									{evStation?.description}
+								</DialogDescription>
+							)}
+							{evStation?.address && (
+								<div className="grid grid-cols-4 items-center gap-4">
+									<span className="col-span-4 font-semibold">
+										Address:
+									</span>
+									<span className="col-span-4">
+										{evStation?.address}
+									</span>
+								</div>
+							)}
+							{/* {evStation?.supportedPins && (
 						<div className="grid grid-cols-4 items-center gap-4">
 							<span className="col-span-4 font-semibold">
 								Supported Pins:
@@ -92,18 +107,19 @@ export function EvStationModal({
 							</div>
 						</div>
 					)} */}
-					{evStation?.openingTime && evStation?.closingTime && (
-						<div className="grid grid-cols-4 items-center gap-4">
-							<span className="col-span-4 font-semibold">
-								Open Hours:
-							</span>
-							<span className="col-span-4">
-								{`${evStation?.openingTime} - ${evStation?.closingTime}`}
-							</span>
-						</div>
-					)}
+							{evStation?.openingTime &&
+								evStation?.closingTime && (
+									<div className="grid grid-cols-4 items-center gap-4">
+										<span className="col-span-4 font-semibold">
+											Open Hours:
+										</span>
+										<span className="col-span-4">
+											{`${evStation?.openingTime} - ${evStation?.closingTime}`}
+										</span>
+									</div>
+								)}
 
-					{/* <div className="col-span-4 flex items-center space-x-4">
+							{/* <div className="col-span-4 flex items-center space-x-4">
 							<span>Total: {totalSlots}</span>
 							<div className="flex items-center space-x-2">
 								<span>Available: {availableSlots}</span>
@@ -113,14 +129,19 @@ export function EvStationModal({
 								</span>
 							</div>
 						</div> */}
-				</div>
-				<Separator className="my-4" />
-				<DialogFooter>
-					<Button onClick={onGetDirections} className="w-full">
-						<Map className="mr-2 h-4 w-4" />
-						Get Directions
-					</Button>
-				</DialogFooter>
+						</div>
+						<Separator className="my-4" />
+						<DialogFooter>
+							<Button
+								onClick={onGetDirections}
+								className="w-full"
+							>
+								<Map className="mr-2 h-4 w-4" />
+								Get Directions
+							</Button>
+						</DialogFooter>
+					</>
+				)}
 			</DialogContent>
 		</Dialog>
 	);
