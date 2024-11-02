@@ -10,12 +10,8 @@ export const isPhone = () => {
 };
 
 export const openCoordinatesInMapsApp = (coordinates: [number, number]) => {
-	if (isPhone()) {
-		window.open(`geo:${coordinates[0]},${coordinates[1]}`, '_blank');
-	} else {
-		window.open(
-			`http://www.google.com/maps/place/${coordinates[1]},${coordinates[0]}`,
-			'_blank',
-		);
-	}
+	window.open(
+		`http://www.google.com/maps/place/${coordinates[1]},${coordinates[0]}`,
+		'_blank',
+	);
 };
