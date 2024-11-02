@@ -43,8 +43,11 @@ export function MapSearch({
 	const handleSelectedLocation = useCallback(
 		(location: TSearchResult) => {
 			setSelectedLocation(location);
+			setTimeout(() => {
+				handleDropdown(false);
+			}, 100);
 		},
-		[setSelectedLocation],
+		[setSelectedLocation, handleDropdown],
 	);
 
 	return (
