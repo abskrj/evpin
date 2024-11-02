@@ -9,9 +9,13 @@ import { CITY_LAT_LNG } from '@/constants/location';
 import { EvStationModal } from '../ev-station-modal';
 import { TSearchResult } from '@/types';
 
+const API_KEY = import.meta.env.DEV
+	? ''
+	: 'd63bec6b-33e2-4dd3-995a-c668e31ccdec';
+
 const TILE_URL = {
-	DARK: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
-	LIGHT: 'https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png',
+	DARK: `https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png?api_key=${API_KEY}`,
+	LIGHT: `https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png?api_key=${API_KEY}`,
 };
 
 interface IMapProps {
