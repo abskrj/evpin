@@ -30,19 +30,6 @@ export function MapSearch({
 		handleSearch(searchQuery);
 	};
 
-	useEffect(() => {
-		const handleBlur = () => {
-			inputRef.current?.blur();
-		};
-
-		if (inputRef.current) {
-			const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent);
-			if (isIos) {
-				document.body.addEventListener('touchstart', handleBlur);
-			}
-		}
-	}, []);
-
 	const handleDropDownOpen = () => {
 		if (searchQuery.length > 2 && searchResults.length > 0) {
 			handleDropdown(true);
@@ -58,6 +45,7 @@ export function MapSearch({
 	const handleSelectedLocation = useCallback(
 		(location: TSearchResult) => {
 			setSelectedLocation(location);
+			handleDropDownClose();
 		},
 		[setSelectedLocation],
 	);
@@ -75,9 +63,6 @@ export function MapSearch({
 						onChange={(e) => setSearchQuery(e.target.value)}
 						onBlur={handleDropDownClose}
 						onFocus={handleDropDownOpen}
-						onMouseLeave={(e) =>
-							(e.target as HTMLInputElement)?.blur()
-						}
 					/>
 					<Button
 						type="submit"
