@@ -2,7 +2,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Search } from 'lucide-react';
 import { TSearchResult } from '@/types';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 interface MapSearchProps {
 	searchQuery: string;
@@ -23,10 +23,25 @@ export function MapSearch({
 	setSelectedLocation,
 	handleSearch,
 }: MapSearchProps) {
+	const inputRef = useRef<HTMLInputElement>(null);
+
 	const handleSearchWrapper = (e: React.FormEvent) => {
 		e.preventDefault();
 		handleSearch(searchQuery);
 	};
+
+	useEffect(() => {
+		const handleBlur = () => {
+			inputRef.current?.blur();
+		};
+
+		if (inputRef.current) {
+			const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent);
+			if (isIos) {
+				document.body.addEventListener('touchstart', handleBlur);
+			}
+		}
+	}, []);
 
 	const handleDropDownOpen = () => {
 		if (searchQuery.length > 2 && searchResults.length > 0) {
@@ -43,11 +58,8 @@ export function MapSearch({
 	const handleSelectedLocation = useCallback(
 		(location: TSearchResult) => {
 			setSelectedLocation(location);
-			setTimeout(() => {
-				handleDropdown(false);
-			}, 100);
 		},
-		[setSelectedLocation, handleDropdown],
+		[setSelectedLocation],
 	);
 
 	return (
@@ -55,6 +67,7 @@ export function MapSearch({
 			<div className="absolute top-4 left-4 right-4 sm:w-80 md:w-96">
 				<form onSubmit={handleSearchWrapper} className="relative">
 					<Input
+						ref={inputRef}
 						type="search"
 						placeholder="Search..."
 						className="w-full pr-10 rounded-md shadow-lg"
@@ -62,6 +75,9 @@ export function MapSearch({
 						onChange={(e) => setSearchQuery(e.target.value)}
 						onBlur={handleDropDownClose}
 						onFocus={handleDropDownOpen}
+						onMouseLeave={(e) =>
+							(e.target as HTMLInputElement)?.blur()
+						}
 					/>
 					<Button
 						type="submit"
