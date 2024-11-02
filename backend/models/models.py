@@ -56,3 +56,55 @@ class EVChargerStripped(EVChargerBase):
 
 class EVChargerStrippedList(BaseModel):
     data: List[EVChargerStripped] = Field(default=[])
+
+class NominatimGeoJson(BaseModel):
+    type: str = Field()
+    coordinates: object = Field()
+
+class NominatimPlace(BaseModel):
+    place_id: int = Field()
+    osm_type: str = Field()
+    osm_id: int = Field()
+    lat: str = Field()
+    lon: str = Field()
+    category: str = Field()
+    type: str = Field()
+    place_rank: int = Field()
+    importance: float = Field()
+    addresstype: str = Field()
+    name: str = Field()
+    display_name: str = Field()
+    boundingbox: list[str] = Field()
+    geojson: NominatimGeoJson = Field()
+
+class MatchedSubstring(BaseModel):
+    offset: int = Field()
+    length: int = Field()
+
+class Term(BaseModel):
+    offset: int = Field()
+    value: str = Field()
+
+class StructuredFormatting(BaseModel):
+    main_text_matched_substrings: List[MatchedSubstring] = Field(default_factory=list)
+    secondary_text_matched_substrings: List[MatchedSubstring] = Field(default_factory=list)
+    secondary_text: str = Field()
+    main_text: str = Field()
+
+class OlaMapsLocation(BaseModel):
+    lng: float = Field()
+    lat: float = Field()
+
+class Geometry(BaseModel):
+    location: OlaMapsLocation = Field()
+
+class OlaMapsPlace(BaseModel):
+    reference: str = Field()
+    types: List[str] = Field(default_factory=list)
+    matched_substrings: List[MatchedSubstring] = Field(default_factory=list)
+    terms: List[Term] = Field(default_factory=list)
+    structured_formatting: StructuredFormatting = Field()
+    description: str = Field()
+    geometry: Geometry = Field()
+    place_id: str = Field()
+    layer: List[str] = Field(default_factory=list)

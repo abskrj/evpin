@@ -7,6 +7,7 @@ load_dotenv()
 class CommonSettings(BaseSettings):
     APP_NAME: str = "EV Charger API"
     DEBUG_MODE: bool = True
+    OLA_MAPS_API_KEY: str | None = os.getenv("OLA_MAPS_API_KEY")
 
 
 class ServerSettings(BaseSettings):
@@ -23,3 +24,5 @@ class Settings(CommonSettings, ServerSettings, DatabaseSettings):
     pass
 
 settings = Settings()
+
+assert settings.OLA_MAPS_API_KEY

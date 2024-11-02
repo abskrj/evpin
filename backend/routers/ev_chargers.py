@@ -4,7 +4,7 @@ from typing import Annotated
 from bson import ObjectId
 from models.models import EVChargerStrippedList, EVChargerStripped, EVChargerPublic
 
-router = APIRouter(prefix="/ev-chargers")
+router = APIRouter(prefix="/ev-chargers", tags=["ev-chargers"])
 
 @router.get("/nearby", response_model=EVChargerStrippedList)
 async def get_ev_chargers_stripped(
