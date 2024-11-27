@@ -14,7 +14,7 @@ Permission is hereby granted, free of charge, to any individual or organization 
    - Integrating the Software into proprietary systems.
    - Deploying the Software in a production environment for commercial purposes.
 
-   To obtain a commercial license, contact [Your Contact Information or Website].
+   To obtain a commercial license, contact [admin@evpin.in](mailto:admin@evpin.in).
 
 3. **Restrictions**
    - The Software shall not be used for any activity that violates applicable laws or regulations.
@@ -27,6 +27,6 @@ Permission is hereby granted, free of charge, to any individual or organization 
    This license is automatically terminated if any of the conditions outlined above are violated. Upon termination, users must cease using and delete all copies of the Software.
 
 6. **Attribution**
-   Any use of this Software, whether for non-commercial or commercial purposes, must include an attribution to [Your Name or Company].
+   Any use of this Software, whether for non-commercial or commercial purposes, must include an attribution to EVpin.in.
 
-By using this Software, you agree to the terms outlined in this license. For commercial inquiries, please contact [Your Email Address or Website Link].
+By using this Software, you agree to the terms outlined in this license. For commercial inquiries, please contact [admin@evpin.in](mailto:admin@evpin.in).
